@@ -1,6 +1,5 @@
 package com.mock.quartz;
 
-import com.mock.cache.RedisCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,8 @@ import org.springframework.stereotype.Component;
 public class BizQuartz {
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private RedisCache cache;
+//    @Autowired
+//    private RedisCache cache;
 
     /**
      * 每隔5分钟定时触发

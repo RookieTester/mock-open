@@ -1,7 +1,9 @@
 package com.mock.web;
 
+import com.mock.dto.BaseResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -20,8 +22,9 @@ public class PageController {
         return new ModelAndView("imgupload",null);
     }
 
-    @RequestMapping(value = "test")
-    public ModelAndView testPage(){
-        return new ModelAndView("test",null);
+    @RequestMapping(value = "ABTest")
+    public ModelAndView abtestPage(){
+        return new ModelAndView("ABTest",null);
     }
+
 }

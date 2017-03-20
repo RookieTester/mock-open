@@ -23,7 +23,6 @@ public class BindingResultAop {
 
     @Around("aopMethod()")
     public Object  around(ProceedingJoinPoint joinPoint) throws Throwable{
-        LOG.info("切片");
         BindingResult bindingResult = null;
         for(Object arg:joinPoint.getArgs()){
             if(arg instanceof BindingResult){

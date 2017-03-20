@@ -42,7 +42,7 @@
                 shrinkToFit: true,
                 rowNum: 100,
                 rowList: [10, 20, 30],
-                colNames: ["主键", "名称", "协议", "域名", "链接", "连接类型", "内容", "端口号", "文件名", "状态码", ""],
+                colNames: ["主键", "名称", "协议", "域名", "链接", "内容", "文件名", "状态码", ""],
                 colModel: [{
                     name: "id",
                     index: "id",
@@ -70,21 +70,10 @@
                     width: 80,
                     editable: false,
                 }, {
-                    name: "bind",
-                    index: "bind",
-                    width: 80,
-                    editable: false,
-                }, {
                     name: "json",
                     index: "json",
                     width: 80,
                     editable: false,
-                }, {
-                    name: "port",
-                    index: "port",
-                    width: 80,
-                    editable: true,
-                    hidden: true
                 }, {
                     name: "fileName",
                     index: "fileName",
@@ -218,24 +207,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <form class="form-horizontal">
-                            <div class="col-sm-10">
-                                <div class="radio i-checks">
-                                    <label>
-                                        <input type="radio" checked="" id="standard" name="urlFormat" value=0> <i></i>
-                                        标准格式：http://app.api.com/get?a=1&b=2
-                                    </label>
-                                </div>
-                                <div class="radio i-checks">
-                                    <label>
-                                        <input type="radio" id="private" name="urlFormat" value=1> <i></i>
-                                        私有格式：http://app.api.com/get-a1-b2.json
-                                    </label>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
 
                     <!-- 状态码部分 -->
                     <label id="status">
@@ -445,7 +416,6 @@
         var alias = document.getElementById("alias").value;
         var url = document.getElementById("url").value;
         var json = current_json_str;//压缩后的JSON
-        var bind = $('input:radio[name="urlFormat"]:checked').val();
         var statusValue = document.getElementById("statusValue").value;
         var switchVar = $('input:checkbox[name="status"]:checked').val();
         var id = document.getElementById("proxy").value;
@@ -456,7 +426,7 @@
                 $.ajax({
                     url: "<%=path%>/mock/execute",
                     data: {
-                        alias: alias, url: url, json: "", bind: bind, statusSwitch: 1, statusValue: statusValue
+                        alias: alias, url: url, json: "", statusSwitch: 1, statusValue: statusValue
                     },
                     type: "post",
                     async: false,
@@ -466,7 +436,7 @@
                 $.ajax({
                     url: "<%=path%>/mock/execute",
                     data: {
-                        alias: alias, url: url, json: json, bind: bind, statusSwitch: 0, statusValue: ""
+                        alias: alias, url: url, json: json, statusSwitch: 0, statusValue: ""
                     },
                     type: "post",
                     async: false,

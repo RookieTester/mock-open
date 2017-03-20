@@ -37,16 +37,14 @@ public class MockController {
             @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "alias", required = false) String alias,
             @RequestParam(value = "url", required = false) String url,
-            @RequestParam(value = "bind", required = false) Integer bind,
             @RequestParam(value = "json") String json,
-            @RequestParam(value = "delay", required = false) String delay,
             @RequestParam(value = "statusSwitch", required = false) Integer statusSwitch,
             @RequestParam(value = "statusValue", required = false) Integer statusValue) {
         if (id==null){//id为空执行插入操作
             //解析URL
-            String proto = ResolveURL.read(bind, url).get("proto");
-            String domain = ResolveURL.read(bind, url).get("domain");
-            String context = ResolveURL.read(bind, url).get("context");
+            String proto = ResolveURL.read(url).get("proto");
+            String domain = ResolveURL.read(url).get("domain");
+            String context = ResolveURL.read(url).get("context");
 
             List<MockInfo> mockInfos = mockService.query();
             boolean checkResult = false;
@@ -72,9 +70,6 @@ public class MockController {
             mockInfo.setDomain(domain);
             mockInfo.setUrl(context);
             mockInfo.setCompleteUrl(url);
-            if (null != bind) {
-                mockInfo.setBind(bind);
-            }
 
             mockInfo.setJson(json);
 
@@ -87,7 +82,7 @@ public class MockController {
 
             try {
                 //向远程服务器发送命令,并获取moco端口号和文件名
-                Map<String, String> map = MockUtil.configNginx(mockInfo.getUrl(), mockInfo.getJson(), mockInfo.getProto(), mockInfo.getBind(), statusSwitch, statusValue);
+                Map<String, String> map = MockUtil.configNginx(mockInfo.getUrl(), mockInfo.getJson(), mockInfo.getProto(), statusSwitch, statusValue);
                 mockInfo.setFileName(map.get("fileName"));
                 mockService.insert(mockInfo);
                 return new BaseResult<Object>(true, "成功添加一条记录！");
@@ -109,84 +104,15 @@ public class MockController {
         }
     }
 
-//    @ResponseBody
-//    @Produces("application/json;charset=UTF-8")
-//    @RequestMapping(value = "add")
-//    public BaseResult<Object> add(
-//            HttpServletRequest request,
-//            @RequestParam(value = "alias", required = false) String alias,
-//            @RequestParam(value = "url") String url,
-//            @RequestParam(value = "bind") Integer bind,
-//            @RequestParam(value = "json") String json,
-//            @RequestParam(value = "statusSwitch", required = false) int statusSwitch,
-//            @RequestParam(value = "statusValue", required = false) Integer statusValue) {
-//        //解析URL
-//        String proto = ResolveURL.read(bind, url).get("proto");
-//        String domain = ResolveURL.read(bind, url).get("domain");
-//        String context = ResolveURL.read(bind, url).get("context");
-//
-//        List<MockInfo> mockInfos = mockService.query();
-//        boolean checkResult = false;
-//        for (MockInfo mockInfo : mockInfos) {
-//            if (mockInfo.getUrl().equals(context)) {
-//                return new BaseResult<Object>(false, "该接口已经存在mock数据，无法添加。若有需要，请直接修改该数据！");
-//            }
-//            if (mockInfo.getDomain().equals(domain)) {
-//                checkResult = true;
-//            }
-//        }
-//        /**
-//         * 判断该域名是否已在Nginx server模块中配置，若未配置，则发送邮件
-//         */
-//        if (checkResult == false) {
-//            MockUtil.updateDomain(domain);
-//            //MailUtil mailUtil=new MailUtil(domain+"域名尚未配置，请尽快处理！");
-//            //return new BaseResult<Object>(false,"该域名尚未配置，请耐心等待，配置完成会邮件通知您！");
-//        }
-//
-//        //向JavaBean注入属性值
-//        MockInfo mockInfo = new MockInfo();
-//        mockInfo.setAlias(alias);
-//        mockInfo.setProto(proto);
-//        mockInfo.setDomain(domain);
-//        mockInfo.setUrl(context);
-//        mockInfo.setCompleteUrl(url);
-//        if (null != bind) {
-//            mockInfo.setBind(bind);
-//        }
-//
-//        mockInfo.setJson(json);
-//
-//        if (statusSwitch == 1) {
-//            mockInfo.setStatus(statusValue);
-//        } else if (statusSwitch == 0) {
-//            statusValue = 200;
-//            mockInfo.setStatus(200);
-//        }
-//
-//        try {
-//            //向远程服务器发送命令,并获取moco端口号和文件名
-//            Map<String, String> map = MockUtil.configNginx(mockInfo.getUrl(), mockInfo.getJson(), mockInfo.getProto(), mockInfo.getBind(), statusSwitch, statusValue);
-//            mockInfo.setPort(Integer.valueOf(map.get("port")));
-//            mockInfo.setFileName(map.get("fileName"));
-//            mockService.insert(mockInfo);
-//            return new BaseResult<Object>(true, "成功添加一条记录！");
-//        } catch (Exception e) {
-//            return new BaseResult<Object>(false, e.getMessage());
-//        }
-//    }
-
     @RequestMapping(value = "insert")
     public ModelAndView insert(@RequestParam(value = "proto") String proto,
                                @RequestParam(value = "domain") String domain,
                                @RequestParam(value = "url") String url,
-                               @RequestParam(value = "bind") Integer bind,
                                @RequestParam(value = "json") String json) {
         MockInfo mockInfo = new MockInfo();
         mockInfo.setProto(proto);
         mockInfo.setDomain(domain);
         mockInfo.setUrl(url);
-        mockInfo.setBind(bind);
         mockInfo.setJson(json);
         mockService.insert(mockInfo);
         return new ModelAndView("mock", null);

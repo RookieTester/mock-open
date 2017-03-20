@@ -261,6 +261,27 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>0.9.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.jayway.jsonpath</groupId>-->
+            <!--<artifactId>json-path-assert</artifactId>-->
+            <!--<version>0.9.1</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>spring-mock-mvc</artifactId>
+            <version>3.0.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <!-- Build Settings -->
     <!--http://maven.apache.org/pom.html#Build_Settings -->

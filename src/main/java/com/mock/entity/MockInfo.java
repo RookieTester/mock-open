@@ -11,10 +11,7 @@ public class MockInfo implements Serializable{
     private String proto;
     private String domain;
     private String url;
-    private int bind;
     private String json;
-    private String delay;
-    private int port;
     private String fileName;
     private int status;
     private String completeUrl;
@@ -59,36 +56,12 @@ public class MockInfo implements Serializable{
         this.url = url;
     }
 
-    public int getBind() {
-        return bind;
-    }
-
-    public void setBind(int bind) {
-        this.bind = bind;
-    }
-
     public String getJson() {
         return json;
     }
 
     public void setJson(String json) {
         this.json = json;
-    }
-
-    public String getDelay() {
-        return delay;
-    }
-
-    public void setDelay(String delay) {
-        this.delay = delay;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
     }
 
     public String getFileName() {

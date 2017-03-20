@@ -13,7 +13,7 @@
 
 
     <!-- 激活组件扫描功能,扫描aop的相关组件组件 -->
-    <context:component-scan base-package="com.server.example.aop"/>
+    <context:component-scan base-package="com.mock.aop"/>
     <!-- 启动对@AspectJ注解的支持 -->
     <aop:aspectj-autoproxy proxy-target-class="true" />
 
@@ -37,16 +37,9 @@
     </bean>
 
     <!--扫描web相关的controller-->
-    <context:component-scan base-package="com.server.example.web"/>
+    <context:component-scan base-package="com.mock.web"/>
 
     <!--全局异常捕捉 -->
     <bean class="com.mock.exception.GlobalExceptionResolver" />
 
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- 设置上传文件的最大尺寸为5MB -->
-        <property name="maxUploadSize">
-            <value>5242880</value>
-        </property>
-    </bean>
 </beans>
