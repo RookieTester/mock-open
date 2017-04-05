@@ -57,7 +57,7 @@ public class MockUtil {
         if (protoType.equals("http")||protoType.equals("HTTP")){
 
         }else if (protoType.equals("https")||protoType.equals("HTTPS")){
-            proto=1;
+            proto=0;
         }else {
             throw new IllegalArgumentException("暂不支持该类型协议的URL，请使用http/https！");
         }
