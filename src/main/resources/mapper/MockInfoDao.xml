@@ -60,9 +60,9 @@
 
     <insert id="insert">
         INSERT INTO
-        mock_info(id,proto,domain,url,bind,json,port,filename,complete_url,alias)
+        mock_info(id,proto,domain,url,json,filename,complete_url,alias)
         VALUES
-        (#{id},#{proto},#{domain},#{url},#{bind},#{json},#{port},#{fileName},#{completeUrl},#{alias})
+        (#{id},#{proto},#{domain},#{url},#{json},#{fileName},#{completeUrl},#{alias})
     </insert>
 
     <update id="update">
