@@ -28,15 +28,12 @@ import org.springframework.stereotype.Component;
 public class BizQuartz {
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
-//    @Autowired
-//    private RedisCache cache;
-
     /**
      * 每隔5分钟定时触发
      */
     @Scheduled(cron = "0 0/5 * * * ? ")
     public void cacheClear() {
-        LOG.info("定时任务");
+        //LOG.info("定时任务");
     }
 
 }

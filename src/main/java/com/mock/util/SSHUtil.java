@@ -5,6 +5,9 @@ import ch.ethz.ssh2.Session;
 import ch.ethz.ssh2.StreamGobbler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by Administrator on 2017/3/20.
@@ -27,11 +31,14 @@ public class SSHUtil {
 
     private String command;
 
-    public SSHUtil(String host,String user,String password,String command){
-        this.host=host;
-        this.user=user;
-        this.password=password;
+    public SSHUtil(String command) throws IOException {
+        Resource resource=new ClassPathResource("mock.properties");
+        Properties props = PropertiesLoaderUtils.loadProperties(resource);
+        this.host=props.getProperty("host");
+        this.user=props.getProperty("user");
+        this.password=props.getProperty("password");
         this.command=command;
+        connect();
     }
 
     public void connect(){

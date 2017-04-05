@@ -26,6 +26,7 @@
     <script src="<%=path%>/resource/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
     <script src="<%=path%>/resource/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
     <script src="<%=path%>/resource/js/content.js"></script>
+
     <script>
         /**
          * 初始化jqgrid
@@ -42,7 +43,7 @@
                 shrinkToFit: true,
                 rowNum: 100,
                 rowList: [10, 20, 30],
-                colNames: ["主键", "名称", "协议", "域名", "链接", "内容", "文件名", "状态码", ""],
+                colNames: ["主键", "名称", "协议", "域名", "链接", "内容", "文件名", "状态码", "", ""],
                 colModel: [{
                     name: "id",
                     index: "id",
@@ -85,6 +86,11 @@
                     width: 80,
                     editable: false,
                 }, {
+                    name: "edit",
+                    index: "id",
+                    width: 40,
+                    editable: false,
+                }, {
                     name: "del",
                     index: "id",
                     width: 40,
@@ -101,37 +107,16 @@
                     for (var i = 0; i < ids.length; i++) {
                         var id = ids[i];
                         var rowDatas = $("#table_list_1").jqGrid('getRowData', id);
+                        edit = "<a id='edit' href='<%=path%>/page/modal-edit?id="+id+"' style='color:#2E8B57' data-toggle='modal' data-target='#modal-form'>编辑</a>";
                         del = "<a style='color:#2E8B57' onclick='deleteMock(" + id + ")'>删除</a>";
                         jQuery("#table_list_1").jqGrid('setRowData', ids[i], {
-                            del: del
+                            edit:edit,del: del
                         });
                     }
                 },
 
                 onSelectRow: function (id) {
-                    $("#url").attr("readonly", "readonly");
-                    $.ajax({
-                        url: "<%=path%>/mock/queryById",
-                        data: {
-                            id: id
-                        },
-                        type: "post",
-                        async: false,
-                        success: successFuc
-                    })
 
-                    function successFuc(data) {
-                        var json = eval(data).json;
-                        var completeUrl = eval(data).completeUrl;
-                        var alias = eval(data).alias;
-                        //alert("json:"+json+",url:"+url);
-                        $("#json-src").val(json);
-                        $("#url").val(completeUrl);
-                        $("#alias").val(alias);
-                    }
-
-                    $("#proxy").attr("value", id);
-                    //alert(test);
                 }
 
             });
@@ -181,8 +166,18 @@
     <script src="<%=path%>/resource/js/plugins/switchery/switchery.js"></script>
 </head>
 
-
 <body class="gray-bg">
+
+<!-- 点击编辑按钮时，弹出的模态窗-->
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div class="row">
@@ -192,6 +187,14 @@
                     <h5>Mock</h5>
                 </div>
                 <div class="ibox-content">
+                    <p>
+                        <strong>注意事项：</strong>
+                    </p>
+                    <ol>
+                        <li>需要将mock接口的域名指向mock服务的IP</li>
+                        <li>目前mock接口数据不支持参数区分（入参无论怎样赋值，返回的数据都是相同的）</li>
+                    </ol>
+                    <br>
 
                     <div class="form-group" style="margin: 50px 10px 20px 5px;">
                         <div class="input-group">
@@ -219,7 +222,7 @@
                     <header class="header">
                         <div class="row-fluid">
                             <div class="col-md-5" style="position:relative;">
-                                <a class="logo" href="/">Json<span style="color:#555;">填写框</span></a>
+                                <a class="logo" href="#">Json<span style="color:#555;">填写框</span></a>
                             </div>
                             <nav class="col-md-7" style="padding:10px 0;" align="right">
                                 <div class="navi">
@@ -246,11 +249,10 @@
                             </div>
                             <form id="form-save" method="POST">
                                 <input type="hidden" value="" id="txt-content"
-                                                                      name="content">
+                                       name="content">
                             </form>
                         </div>
 
-                        <input id="proxy" type="hidden" value="false"/>
                         <br style="clear:both;"/>
                     </main>
 
@@ -286,16 +288,7 @@
                         <div id="pager_list_1"></div>
                         <hr>
 
-                        <div class="ibox">
-                            <p>
-                                <strong>注意事项：</strong>
-                            </p>
-                            <ol>
-                                <li>需要将mock接口的域名指向10.168.66.226</li>
-                                <li>目前mock接口数据不支持参数区分（入参无论怎样赋值，返回的数据都是相同的）</li>
-                            </ol>
-                            <br>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -418,60 +411,33 @@
         var json = current_json_str;//压缩后的JSON
         var statusValue = document.getElementById("statusValue").value;
         var switchVar = $('input:checkbox[name="status"]:checked').val();
-        var id = document.getElementById("proxy").value;
-
-        if (id=='false'){
-            //alert(id);
-            if (switchVar == 'on') {
-                $.ajax({
-                    url: "<%=path%>/mock/execute",
-                    data: {
-                        alias: alias, url: url, json: "", statusSwitch: 1, statusValue: statusValue
-                    },
-                    type: "post",
-                    async: false,
-                    success: successFuc
-                })
-            } else {
-                $.ajax({
-                    url: "<%=path%>/mock/execute",
-                    data: {
-                        alias: alias, url: url, json: json, statusSwitch: 0, statusValue: ""
-                    },
-                    type: "post",
-                    async: false,
-                    success: successFuc
-                })
-            }
-        }else {
-            var json = current_json_str;
-            //alert(current_json_str);
-            var id = document.getElementById("proxy").value;
+        if (switchVar == 'on') {
             $.ajax({
                 url: "<%=path%>/mock/execute",
                 data: {
-                    id: id, json: json, alias:alias
+                    alias: alias, url: url, json: "", statusSwitch: 1, statusValue: statusValue
                 },
                 type: "post",
                 async: false,
-                success: updateFuc
+                success: successFuc
+            })
+        } else {
+            $.ajax({
+                url: "<%=path%>/mock/execute",
+                data: {
+                    alias: alias, url: url, json: json, statusSwitch: 0, statusValue: ""
+                },
+                type: "post",
+                async: false,
+                success: successFuc
             })
         }
-
         function successFuc(data) {
             var json = eval(data);
             var result = json.errorMsg;
             alert(result);
         }
 
-        function updateFuc(data) {
-            $("#proxy").attr("value", "false");
-            var json_update = eval(data);
-            var result_update = json_update.errorMsg;
-            alert(result_update);
-            $("#url").attr("readonly", false);
-            $("#table_list_1").trigger("reloadGrid");
-        }
     })
 
 </script>
@@ -497,6 +463,7 @@
         }
 
     })
+
 </script>
 
 <!-- 由于存在Js冲突，将部分变量的初始化放在这里 -->

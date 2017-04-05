@@ -2,37 +2,19 @@ package com.mock.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 
 /**
  * Created by Administrator on 2017/1/17.
  */
-public class MockUtil {
+public class MockUtil{
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
-
-    private static String hostname;
-
-    private static String username;
-
-    private static String password;
-
-    private MockUtil() throws IOException {
-        Resource resource=new ClassPathResource("mock.properties");
-        Properties props = PropertiesLoaderUtils.loadProperties(resource);
-        this.hostname=props.getProperty("host");
-        this.username=props.getProperty("user");
-        this.password=props.getProperty("password");
-    }
 
     public static void main(String[] args){
 
@@ -48,7 +30,7 @@ public class MockUtil {
      * @param statusValue 状态码值
      * @return
      */
-    public static Map<String,String> configNginx(String url, String json, String protoType, int statusSwitch, Integer statusValue){
+    public static Map<String,String> configNginx(String url, String json, String protoType, int statusSwitch, Integer statusValue) throws IOException {
 
         int proto=0;//协议默认是http
         String command="";
@@ -67,7 +49,7 @@ public class MockUtil {
                 fileName+" " + url + " '" + json + "' "+ proto +" "+statusSwitch+" "+statusValue+
                 ";service nginx reload";
 
-        SSHUtil sshUtil=new SSHUtil(hostname,username,password,command);
+        SSHUtil sshUtil=new SSHUtil(command);
 
         Map<String, String> mapRequest = new HashMap<String, String>();
         mapRequest.put("fileName",fileName);
@@ -79,17 +61,17 @@ public class MockUtil {
         return sdf.format(new Date());
     }
 
-    public static void updateJson(String fileName,String json){
+    public static void updateJson(String fileName,String json) throws IOException {
         String command="cd /etc/nginx/conf.d/mock/shell;bash -x change_json.sh "+fileName+" '"+json+"'";
-        SSHUtil sshUtil=new SSHUtil(hostname,username,password,command);
+        SSHUtil sshUtil=new SSHUtil(command);
     }
 
-    public static void updateDomain(String domain){
+    public static void updateDomain(String domain) throws IOException {
         String command="cd /etc/nginx/conf.d/mock/shell;bash -x auto_domain.sh "+domain;
-        SSHUtil sshUtil=new SSHUtil(hostname,username,password,command);
+        SSHUtil sshUtil=new SSHUtil(command);
     }
 
-    public static void deleteMock(String proto,String fileName){
+    public static void deleteMock(String proto,String fileName) throws IOException {
         String command="";
 
         if (proto.equals("http")){
@@ -100,7 +82,7 @@ public class MockUtil {
             throw new IllegalArgumentException("参数错误");
         }
 
-        SSHUtil sshUtil=new SSHUtil(hostname,username,password,command);
+        SSHUtil sshUtil=new SSHUtil(command);
     }
 
 }

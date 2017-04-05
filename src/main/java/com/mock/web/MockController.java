@@ -1,11 +1,12 @@
 package com.mock.web;
 
+import com.alibaba.fastjson.JSONObject;
 import com.mock.dto.BaseResult;
-import com.mock.util.page.JsonResponse;
 import com.mock.entity.MockInfo;
 import com.mock.service.MockService;
 import com.mock.util.MockUtil;
 import com.mock.util.ResolveURL;
+import com.mock.util.page.JsonResponse;
 import com.mock.util.page.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Produces;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 /**
@@ -34,73 +37,58 @@ public class MockController {
     @Produces("application/json;charset=UTF-8")
     @RequestMapping(value = "execute")
     public BaseResult<Object> execute(
-            @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "alias", required = false) String alias,
             @RequestParam(value = "url", required = false) String url,
             @RequestParam(value = "json") String json,
             @RequestParam(value = "statusSwitch", required = false) Integer statusSwitch,
-            @RequestParam(value = "statusValue", required = false) Integer statusValue) {
-        if (id==null){//id为空执行插入操作
-            //解析URL
-            String proto = ResolveURL.read(url).get("proto");
-            String domain = ResolveURL.read(url).get("domain");
-            String context = ResolveURL.read(url).get("context");
+            @RequestParam(value = "statusValue", required = false) Integer statusValue) throws IOException {
+        //解析URL
+        String proto = ResolveURL.read(url).get("proto");
+        String domain = ResolveURL.read(url).get("domain");
+        String context = ResolveURL.read(url).get("context");
 
-            List<MockInfo> mockInfos = mockService.query();
-            boolean checkResult = false;
-            for (MockInfo mockInfo : mockInfos) {
-                if (mockInfo.getUrl().equals(context)) {
-                    return new BaseResult<Object>(false, "该接口已经存在mock数据，无法添加。若有需要，请直接修改该数据！");
-                }
-                if (mockInfo.getDomain().equals(domain)) {
-                    checkResult = true;
-                }
+        List<MockInfo> mockInfos = mockService.query();
+        boolean checkResult = false;
+        for (MockInfo mockInfo : mockInfos) {
+            if (mockInfo.getUrl().equals(context)) {
+                return new BaseResult<Object>(false, "该接口已经存在mock数据，无法添加。若有需要，请直接修改该数据！");
             }
-            /**
-             * 判断该域名是否已在Nginx server模块中配置，若未配置，则在Nginx的server模块自动添加一个server_name
-             */
-            if (checkResult == false) {
-                MockUtil.updateDomain(domain);
+            if (mockInfo.getDomain().equals(domain)) {
+                checkResult = true;
             }
+        }
+        /**
+         * 判断该域名是否已在Nginx server模块中配置，若未配置，则在Nginx的server模块自动添加一个server_name
+         */
+        if (checkResult == false) {
+            MockUtil.updateDomain(domain);
+        }
 
-            //向JavaBean注入属性值
-            MockInfo mockInfo = new MockInfo();
-            mockInfo.setAlias(alias);
-            mockInfo.setProto(proto);
-            mockInfo.setDomain(domain);
-            mockInfo.setUrl(context);
-            mockInfo.setCompleteUrl(url);
+        //向JavaBean注入属性值
+        MockInfo mockInfo = new MockInfo();
+        mockInfo.setAlias(alias);
+        mockInfo.setProto(proto);
+        mockInfo.setDomain(domain);
+        mockInfo.setUrl(context);
+        mockInfo.setCompleteUrl(url);
 
-            mockInfo.setJson(json);
+        mockInfo.setJson(json);
 
-            if (statusSwitch == 1) {
-                mockInfo.setStatus(statusValue);
-            } else if (statusSwitch == 0) {
-                statusValue = 200;
-                mockInfo.setStatus(200);
-            }
+        if (statusSwitch == 1) {
+            mockInfo.setStatus(statusValue);
+        } else if (statusSwitch == 0) {
+            statusValue = 200;
+            mockInfo.setStatus(200);
+        }
 
-            try {
-                //向远程服务器发送命令,并获取moco端口号和文件名
-                Map<String, String> map = MockUtil.configNginx(mockInfo.getUrl(), mockInfo.getJson(), mockInfo.getProto(), statusSwitch, statusValue);
-                mockInfo.setFileName(map.get("fileName"));
-                mockService.insert(mockInfo);
-                return new BaseResult<Object>(true, "成功添加一条记录！");
-            } catch (Exception e) {
-                return new BaseResult<Object>(false, e.getMessage());
-            }
-        }else {//id不为空执行更新操作
-            try {
-                MockUtil.updateJson(mockService.queryById(id).getFileName(), json);
-                MockInfo mockInfo = new MockInfo();
-                mockInfo.setId(id);
-                mockInfo.setJson(json);
-                mockInfo.setAlias(alias);
-                mockService.update(mockInfo);
-                return new BaseResult<Object>(true, "更新成功");
-            } catch (Exception e) {
-                return new BaseResult<Object>(false, e.getMessage());
-            }
+        try {
+            //向远程服务器发送命令,并获取moco端口号和文件名
+            Map<String, String> map = MockUtil.configNginx(mockInfo.getUrl(), mockInfo.getJson(), mockInfo.getProto(), statusSwitch, statusValue);
+            mockInfo.setFileName(map.get("fileName"));
+            mockService.insert(mockInfo);
+            return new BaseResult<Object>(true, "成功添加一条记录！");
+        } catch (Exception e) {
+            return new BaseResult<Object>(false, e.getMessage());
         }
     }
 
@@ -181,14 +169,16 @@ public class MockController {
     }
 
     @ResponseBody
-    @Produces("application/json;charset=UTF-8")
-    @RequestMapping(value = "edit")
-    public BaseResult<Object> edit(@RequestParam(value = "id") Integer id, @RequestParam(value = "alias") String alias) {
+    @RequestMapping(value = "update")
+    public BaseResult<Object> update(@RequestParam(value = "id") Integer id,
+                                     @RequestParam(value = "alias") String alias,
+                                     @RequestParam(value = "json") String json) {
         try {
             MockInfo mockInfo = new MockInfo();
             mockInfo.setId(id);
             mockInfo.setAlias(alias);
-            mockInfo.setJson(mockService.queryById(id).getJson());
+            mockInfo.setJson(json);
+            MockUtil.updateJson(mockService.queryById(id).getFileName(),json);
             mockService.update(mockInfo);
             return new BaseResult<Object>(true, "更新成功");
         } catch (Exception e) {
