@@ -191,7 +191,7 @@
                         <strong>注意事项：</strong>
                     </p>
                     <ol>
-                        <li>需要将mock接口的域名指向mock服务的IP</li>
+                        <li>需要将mock接口的域名指向Nginx服务的IP</li>
                         <li>目前mock接口数据不支持参数区分（入参无论怎样赋值，返回的数据都是相同的）</li>
                     </ol>
                     <br>
@@ -263,7 +263,7 @@
                                 <div style="float: left">
                                     <select class="form-control" id="queryCondition" >
                                         <option>按URL查询</option>
-                                        <option>按接口别名查询</option>
+                                        <option>按接口名称查询</option>
                                     </select>
                                 </div>
                                 <div style="float: left;width: 500px">
@@ -436,6 +436,7 @@
             var json = eval(data);
             var result = json.errorMsg;
             alert(result);
+            window.location.reload();
         }
 
     })
