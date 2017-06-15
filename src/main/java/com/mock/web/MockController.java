@@ -1,6 +1,5 @@
 package com.mock.web;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mock.dto.BaseResult;
 import com.mock.entity.MockInfo;
 import com.mock.service.MockService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Produces;
 import java.io.IOException;
 import java.util.List;

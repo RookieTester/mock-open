@@ -9,6 +9,7 @@ then
     if [ $5 -eq 0 ]
     then
       echo "location $2{" >>/etc/nginx/conf.d/mock/http/$1.conf
+      echo "   proxy_method GET;" >>/etc/nginx/conf.d/mock/http/$1.conf
       echo "   proxy_pass http://localhost/$1.json;" >>/etc/nginx/conf.d/mock/http/$1.conf
       echo "}" >>/etc/nginx/conf.d/mock/http/$1.conf
     elif [ $5 -eq 1 ]
@@ -24,6 +25,7 @@ then
     if [ $5 -eq 0 ]
     then
       echo "location $2{" >>/etc/nginx/conf.d/mock/https/$1.conf
+      echo "   proxy_method GET;" >>/etc/nginx/conf.d/mock/http/$1.conf
       echo "   proxy_pass http://localhost/$1.json;" >>/etc/nginx/conf.d/mock/https/$1.conf
       echo "}" >>/etc/nginx/conf.d/mock/https/$1.conf
     elif [ $5 -eq 1 ]

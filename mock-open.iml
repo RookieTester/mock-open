@@ -15,8 +15,11 @@
         </sourceRoots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -66,7 +69,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_65/jre/../lib/jconsole.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_65/lib/jconsole.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -75,7 +78,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:tools:1.8.0">
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/jdk1.8.0_65/jre/../lib/tools.jar!/" />
+          <root url="jar://C:/Program Files/Java/jdk1.8.0_65/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -115,5 +118,64 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.codehaus.groovy:groovy-json:2.4.6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:rest-assured-common:3.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: io.rest-assured:xml-path:3.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling.highcharts:gatling-charts-highcharts:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang:scala-library:2.11.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-charts:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-core:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-commons:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang:scala-reflect:2.11.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.typesafe:config:1.3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.dongxiguo:fastring_2.11:0.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.softwaremill.quicklens:quicklens_2.11:1.4.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.asynchttpclient:async-http-client-netty-utils:2.0.29" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.typesafe.scala-logging:scala-logging_2.11:3.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: ch.qos.logback:logback-classic:1.1.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: ch.qos.logback:logback-core:1.1.7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.typesafe.akka:akka-actor_2.11:2.4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.typesafe.akka:akka-slf4j_2.11:2.4.12" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.8.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: me.chrons:boopickle_2.11:1.2.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang.modules:scala-java8-compat_2.11:0.8.0-RC7" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.github.ben-manes.caffeine:caffeine:2.3.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang.modules:scala-parser-combinators_2.11:1.0.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.github.scopt:scopt_2.11:3.5.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:jsonpath_2.11:0.6.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.advantageous.boon:boon-json:0.6.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.advantageous.boon:boon-reflekt:0.6.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: net.sf.saxon:Saxon-HE:9.7.0-10" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jodd:jodd-lagarto:3.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jodd:jodd-core:3.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jodd:jodd-log:3.8.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.tdunning:t-digest:3.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-app:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-http:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.asynchttpclient:async-http-client:2.0.29" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.asynchttpclient:netty-resolver-dns:2.0.29" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.asynchttpclient:netty-resolver:2.0.29" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.asynchttpclient:netty-codec-dns:2.0.29" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.reactivestreams:reactive-streams:1.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.typesafe.netty:netty-reactive-streams:1.0.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.javassist:javassist:3.21.0-GA" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-transport-native-epoll:linux-x86_64:4.0.44.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-common:4.0.44.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-buffer:4.0.44.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-transport:4.0.44.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang.modules:scala-xml_2.11:1.0.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-jms:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-jdbc:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-redis:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: net.debasishg:redisclient_2.11:3.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: commons-pool:commons-pool:1.6" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-metrics:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.gatling:gatling-recorder:2.2.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang.modules:scala-swing_2.11:1.0.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.55" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcprov-jdk15on:1.55" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-codec-http:4.0.44.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-codec:4.0.44.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-handler:4.0.44.Final" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.10.6" level="application" />
   </component>
 </module>

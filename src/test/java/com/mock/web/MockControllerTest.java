@@ -12,8 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
-import static io.restassured.module.mockmvc.matcher.RestAssuredMockMvcMatchers.*;
+
 
 import static org.junit.Assert.*;
 
