@@ -167,7 +167,6 @@
 </head>
 
 <body class="gray-bg">
-
 <!-- 点击编辑按钮时，弹出的模态窗-->
 <div id="modal-form" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
